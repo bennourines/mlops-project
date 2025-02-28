@@ -67,12 +67,44 @@ pipeline {
         }
     }
 
-    post {
+     post {
+        always {
+            // Clean up to save disk space
+            sh 'docker system prune -f || true'
+            sh 'find . -name "__pycache__" -type d -exec rm -rf {} +  || true'
+            sh 'find . -name "*.pyc" -delete || true'
+        }
         success {
-            emailext body: 'The pipeline completed successfully.', subject: 'Pipeline Success', to: 'bennourines00@gmail.com'
+            emailext (
+                body: """
+                <html>
+                <body>
+                <h2>✅ Pipeline Successful</h2>
+                <p>Build: ${env.BUILD_NUMBER}</p>
+                <p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>
+                </body>
+                </html>
+                """,
+                subject: "✅ Pipeline Success: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                to: 'bennourines00@gmail.com',
+                mimeType: 'text/html'
+            )
         }
         failure {
-            emailext body: 'The pipeline failed.', subject: 'Pipeline Failure', to: 'bennourines00@gmail.com'
+            emailext (
+                body: """
+                <html>
+                <body>
+                <h2>❌ Pipeline Failed</h2>
+                <p>Build: ${env.BUILD_NUMBER}</p>
+                <p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>
+                </body>
+                </html>
+                """,
+                subject: "❌ Pipeline Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                to: 'bennourines00@gmail.com',
+                mimeType: 'text/html'
+            )
         }
     }
 }
