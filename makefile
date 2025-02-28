@@ -78,9 +78,26 @@ docker-build: ## Build the Docker image
 
 docker-run: ## Run the Docker container locally
 	docker run -d -p 8000:8000 ines253/ines_bennour_mlops
+	sleep 5  # Attendre que le conteneur démarre
+	docker ps  # Vérifier que le conteneur est en cours d'exécution
+	curl -s http://localhost:8000 || (echo "Le serveur FastAPI ne répond pas. Vérifiez les logs avec 'docker logs <CONTAINER_ID>'." && exit 1)
 
 docker-push: ## Push the Docker image to Docker Hub
 	docker push ines253/ines_bennour_mlops
+	
+# =====================
+#  📦 system_monitoring
+# =====================	
+	
+monitoring-up: ## Start monitoring stack
+	docker-compose -f docker-compose.yml up -d
+
+monitoring-down: ## Stop monitoring stack
+	docker-compose -f docker-compose.yml down
+
+system-monitor: ## Collect system metrics
+	$(PYTHON) system_monitoring.py
+
 
 # =====================
 #  🔄 AUTOMATION
