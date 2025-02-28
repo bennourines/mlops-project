@@ -21,8 +21,9 @@ help:  ## Display this help message
 # =====================
 install: ## Install dependencies and setup virtual environment
 	python3 -m venv $(VENV)
-	$(PIP) install --upgrade pip
+	$(PIP) install --force-reinstall urllib3==1.26.6
 	$(PIP) install -r requirements.txt
+	$(PIP) install --force-reinstall urllib3==1.26.6  # Install again to make sure
 
 # =====================
 #  🔍 CODE QUALITY & SECURITY

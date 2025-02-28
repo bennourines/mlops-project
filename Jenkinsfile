@@ -14,6 +14,12 @@ pipeline {
                 sh 'sleep 10' // Wait for the server to start
             }
         }
+        stage('Debug Dependencies') {
+    steps {
+        sh 'venv/bin/pip list | grep urllib3'
+        sh 'venv/bin/pip show urllib3'
+    }
+}
 
         stage('Run Unit Tests') {
             steps {
