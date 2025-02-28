@@ -13,4 +13,4 @@ flake8
 bandit
 mlflow 
 pylint
-requests
+urllib3
