@@ -26,8 +26,7 @@ pipeline {
         stage('Run Functional Tests') {
     steps {
         sh '''
-            source venv/bin/activate
-            which python  
+            . venv/bin/activate
             make functional-test
         '''
     }
