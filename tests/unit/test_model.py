@@ -1,7 +1,7 @@
 from pipelines.data_pipeline import load_and_prepare_data
 from pipelines.training_pipeline import train_model
 from sklearn.ensemble import RandomForestClassifier
-
+import urllib3
 
 def test_model_training():
     """Test if the model is trained successfully."""
