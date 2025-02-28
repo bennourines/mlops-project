@@ -2,16 +2,16 @@ pipeline {
     agent any
 
     stages {
-        stage('Start MLflow Server') {
-            steps {
-                sh 'mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns --host 0.0.0.0 --port 5000 &'
-                sh 'sleep 10' // Wait for the server to start
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 sh 'make install'
+            }
+        }
+
+        stage('Start MLflow Server') {
+            steps {
+                sh 'venv/bin/mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns --host 0.0.0.0 --port 5000 &'
+                sh 'sleep 10' // Wait for the server to start
             }
         }
 
