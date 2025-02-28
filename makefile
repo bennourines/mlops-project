@@ -42,7 +42,7 @@ quality-check: lint format ## Run all code quality checks
 #  🧪 TESTING
 # =====================
 unit-test: ## Run unit tests
-	$(PYTHON) -m pytest tests/unit
+	PYTHONPATH=$(PYTHONPATH):$(shell pwd) $(PYTHON) -m pytest tests/unit
 
 functional-test: ## Run functional tests
 	$(PYTHON) -m pytest tests/functional
