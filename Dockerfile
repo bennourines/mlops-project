@@ -20,7 +20,6 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # This keeps layers smaller and improves caching
 COPY ./app.py .
 COPY ./pipelines ./pipelines
-COPY ./models ./models
 COPY ./data ./data
 
 # Set environment variables
