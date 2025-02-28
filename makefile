@@ -98,4 +98,3 @@ watch: ## Watch for file changes and trigger pipeline
 ci-cd: install quality-check test data train evaluate ## Run full CI/CD pipeline
 
 all: ci-cd serve ## Run complete pipeline and serve model
-

@@ -11,7 +11,7 @@ pytest
 black
 flake8
 bandit
-mlflow==1.30.0
+mlflow
 pylint
-urllib3==1.26.6
-requests==2.28.0
+urllib3
+requests
