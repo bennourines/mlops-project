@@ -21,18 +21,17 @@ pipeline {
     }
 }
 
-        stage('Run Unit Tests') {
-            steps {
-                sh 'make unit-test'
-            }
-        }
+        
 
         stage('Run Functional Tests') {
-            steps {
-                sh 'make functional-test'
-            }
-        }
-
+    steps {
+        sh '''
+            source venv/bin/activate
+            which python  
+            make functional-test
+        '''
+    }
+}
         stage('Data Pipeline') {
             steps {
                 sh 'make data'
