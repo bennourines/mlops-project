@@ -1,19 +1,35 @@
-# Utiliser une image Python comme base
-FROM python:3.8
+# Use a slim Python base image to reduce size
+FROM python:3.8-slim
 
-# Définir le répertoire de travail dans le conteneur
+# Set working directory
 WORKDIR /app
 
-# Copier tous les fichiers du projet dans le conteneur
-COPY . /app
+# Install system dependencies first (if any)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    build-essential \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Installer les dépendances
+# Copy and install requirements first to leverage Docker caching
+COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt
 
-# Exposer le port sur lequel l'application FastAPI tourne
+# Copy only necessary files for the application
+# This keeps layers smaller and improves caching
+COPY ./app.py .
+COPY ./pipelines ./pipelines
+COPY ./models ./models
+COPY ./data ./data
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    MLFLOW_TRACKING_URI=file:./mlruns
+
+# Expose the port for the FastAPI application
 EXPOSE 8000
 
-# Commande pour lancer l'API
+# Set the command to run the application
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
-

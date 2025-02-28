@@ -1,0 +1,52 @@
+# Version control
+.git
+.gitignore
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Development environments
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# MLflow artifacts
+mlruns/
+mlflow.db
+
+# Jenkins and CI files
+Jenkinsfile
+.jenkins/
+
+# Docker files
+.dockerignore
+Dockerfile
+
+# Large data files (if needed, add back specific data directories)
+data/raw/
+data/interim/
+
+# Logs
+*.log
+
+# Local configuration
+.env
+*.env
+
+# Documentation
+*.md
+docs/
+
+# Test directories (if not needed in container)
+tests/
